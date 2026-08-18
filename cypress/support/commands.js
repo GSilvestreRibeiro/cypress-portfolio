@@ -41,7 +41,7 @@ Cypress.Commands.add('login', () => {
     cy.get('[data-testid="password-input"]').type(Cypress.env('USER_PASSWORD'))
     cy.get('[data-testid="login-button"]').click()
     //valida se esta na pagina logada
-    cy.get('[class="text-xl text-pink-100 mb-4"]',).contains('Lista de Produtos (Admin View)')
+    cy.get('[class="text-xl text-pink-100 mb-4"]').contains('Lista de Produtos (Admin View)')
 
     }, {
         validate() {

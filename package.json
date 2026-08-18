@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "report:merge": "mochawesome-merge cypress/reports/*.json -o cypress/reports/combined.json",
+    "report:html": "marge cypress/reports/combined.json -f report -o cypress/reports",
+    "report": "npm run report:merge && npm run report:html"
+  },
+  "name": "cypress-portfolio",
+  "version": "1.0.0",
+  "description": "Projeto de automação de testes end-to-end com Cypress, focado na validação funcional e fluxo de autenticação de uma aplicação web.",
+  "main": "cypress.config.js",
+  "devDependencies": {
+    "cypress": "^15.21.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GSilvestreRibeiro/cypress-portfolio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GSilvestreRibeiro/cypress-portfolio/issues"
+  },
+  "homepage": "https://github.com/GSilvestreRibeiro/cypress-portfolio#readme"
+}
