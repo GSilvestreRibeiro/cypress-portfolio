@@ -1,51 +1,51 @@
 import LoginPage from '../page/LoginPage'
 
-describe('Realizar Login', () => {
+describe('Autenticação de usuário', () => {
 
     const email = Cypress.env('USER_EMAIL')
     const password = Cypress.env('USER_PASSWORD')
 
     context('Pagina de login disponível', () => {
         it('deve acessar o site e exibir a tela de login', () => {
-            cy.paginaLogin()
+            LoginPage.paginaLogin()
         })
     })
     context('Credenciais válidas', () => {
         it('deve autenticar com credenciais válidas', () => {
-            cy.paginaLogin()
-            cy.login()
+            LoginPage.paginaLogin()
+            LoginPage.login(email, password)
         })
     })
 
     context('Credenciais inválidas', () => {
         it('deve exibir erro para email invalido', () => {
-            cy.paginaLogin()
+            LoginPage.paginaLogin()
             LoginPage.preencherEmail('teste@teste.com')
             LoginPage.preencherSenha(password)
             LoginPage.clickLoginButton()
             LoginPage.messageErrorEmail()
-                .contains('Usuário não encontrado. Verifique o email ou cadastre-se.')
+                .should('have.text', 'Usuário não encontrado. Verifique o email ou cadastre-se.')
         })
-        it.only('deve exibir erro para senha inválida', () => {
-            cy.paginaLogin()
+        it('deve exibir erro para senha inválida', () => {
+            LoginPage.paginaLogin()
             LoginPage.preencherEmail(email)
             LoginPage.preencherSenha('senhaerrada')
             LoginPage.clickLoginButton()
             LoginPage.messageErrorSenha()
-                .contains('Email ou senha inválidos')
+                .should('have.text', 'Email ou senha inválidos')
         })
         it('deve exibir erro para login apenas com senha', () => {
-            cy.paginaLogin()
-            cy.get('[data-testid="password-input"]').type(Cypress.env('USER_PASSWORD'))
-            cy.get('[data-testid="login-button"]').click()
-            cy.get('[data-testid="password-error"]')
-                .should('be.visible')
-                .and('contain', 'Email e senha são obrigatórios')
+            LoginPage.paginaLogin()
+            LoginPage.preencherSenha(password)
+            LoginPage.clickLoginButton()
+            LoginPage.messageErrorSenha()
+                .should('have.text', 'Email e senha são obrigatórios')
         })
     })
 
     it('cy.login() deve funcionar via cy.session()', () => {
-        cy.login()
+        LoginPage.paginaLogin()
+        LoginPage.login(email, password)
         cy.intercept('GET', '**/products').as('getProducts')
         cy.visit('/products')
         cy.wait('@getProducts').then((interception) => {
