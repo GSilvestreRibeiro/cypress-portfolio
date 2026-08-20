@@ -17,9 +17,11 @@ Validar o comportamento da aplicação em cenários funcionais de regressao.
 
 Antes de executar o projeto, verifique se você possui instalado:
 
-- Node.js 18+
-- npm
+- Node.js 22+
+- Cypress 15.21.0
+- npm 10+
 - Navegador compatível com Cypress (Chrome, Edge, Electron, Firefox)
+
 
 ## Instalação
 
