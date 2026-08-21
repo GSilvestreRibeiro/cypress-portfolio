@@ -11,6 +11,7 @@
   "description": "Projeto de automação de testes end-to-end com Cypress, focado na validação funcional e fluxo de autenticação de uma aplicação web.",
   "main": "cypress.config.js",
   "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
     "cypress": "^15.21.0"
   },
   "repository": {

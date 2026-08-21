@@ -19,7 +19,8 @@ class AddProductPage {
         textNameRequired: () => cy.get('[data-testid="error-add-product-name"]'),
         textPriceRequired: () => cy.get('[data-testid="error-add-product-price"]'),
         textStockRequired: () => cy.get('[data-testid="error-add-product-stock"]'),
-        textSkuRequired: () => cy.get('[data-testid="error-add-product-sku"]')
+        textSkuRequired: () => cy.get('[data-testid="error-add-product-sku"]'),
+        alertErrorRequired: () => cy.get('.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--error.Toastify__toast--close-on-click')
     }
 
     fieldsData = [
@@ -31,7 +32,7 @@ class AddProductPage {
         { label: 'Fornecedor', testId: 'add-product-supplier', tag: 'BUTTON' }
     ];
 
-    clickAddProductButton(){
+    clickAddProductButton() {
         this.#elements.btnAddProduct().click()
     }
 
@@ -55,10 +56,58 @@ class AddProductPage {
         this.#elements.btnCancel().should('be.visible');
     }
 
-    clickAddButton(){
+    clickAddButton() {
         this.#elements.btnAdd().click()
     }
-    
+
+    clickBackButton() {
+        this.#elements.btnCancel().click()
+    }
+
+    validateRequiredErros() {
+        this.#elements.textNameRequired().should('be.visible').and('contain', 'Nome é obrigatório');
+        this.#elements.textPriceRequired().should('be.visible').and('contain', 'Preço é obrigatório');
+        this.#elements.textStockRequired().should('be.visible').and('contain', 'Estoque é obrigatório');
+        this.#elements.textSkuRequired().should('be.visible').and('contain', 'SKU é obrigatório');
+    }
+
+    fillProductForm(product) {
+        this.#elements.nameProductInput().type(product.name);
+        this.#elements.priceProductInput().type(product.price);
+        this.#elements.stockProductInput().type(product.stock);
+        this.#elements.skuProductInput().type(product.sku);
+    }
+
+    validateAlertErrorRequired() {
+        this.#elements.alertErrorRequired().should('be.visible').and('contain', 'Erro ao adicionar');
+    }
+
+    selectRandomCategory() {
+        cy.get('[data-testid="add-product-category"]').click()
+
+        cy.get('[data-testid^="add-product-category-option-"]')
+            .should('be.visible')
+            .then(($options) => {
+                const randomIndex = Cypress._.random($options.length - 1)
+
+                cy.wrap($options).eq(randomIndex).click()
+            })
+    }
+
+    selectRandomSupplier() {
+        cy.get('[data-testid="add-product-supplier"]').click()
+
+        cy.get('[data-testid^="add-product-supplier-option-"]')
+            .first()
+            .scrollIntoView()
+            .should('be.visible')
+            .then(($options) => {
+                const randomIndex = Cypress._.random($options.length - 1)
+
+                cy.wrap($options).eq(randomIndex).click()
+            })
+    }
+
 
 }
 

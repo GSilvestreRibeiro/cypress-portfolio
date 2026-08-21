@@ -45,6 +45,10 @@ class LoginPage {
         this.#elements.loginButton().click()
         this.#elements.logado().should('be.visible') 
     }
+
+    validatePageInitial() {
+        this.#elements.logado().should('be.visible')
+    }
 }
 
 export default new LoginPage()
