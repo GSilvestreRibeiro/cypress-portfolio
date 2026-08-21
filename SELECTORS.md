@@ -26,9 +26,17 @@
 
 | Elemento | Seletor | Tipo |
 |----------|---------|------|
+//Login
 |Campo email|`[data-testid="email-input"]`| Input |
 |Campo senha|`[data-testid="password-input"]`| Input |
 |Botão entrar|`[data-testid="login-button"]`| Btn|
 |Campo senha/email invalido|`[data-testid="password-error"]`| Error Message
 |Campo formato email invalido|`[data-testid="email-error"]`| Error Message
 |Botão usuario logado|`[data-js="user-menu:nav-header-avatar-user"]`| Btn
+
+//Adicionar produto
+|Botão adicionar produto|`[data-testid="add-product-button"]`| Btn
+|Modal adicionar produto|`[data-testid="add-product-modal"]`| Modal
+|Título adicionar produto|`[data-testid="add-product-modal"]').find('[class="text-2xl font-bold text-white flex items-center gap-2"]`| Text
+|Form adicionar produto| `[data-testid="add-product-modal"]').find('[class="flex-1 overflow-y-auto p-6 space-y-4"]`
+
