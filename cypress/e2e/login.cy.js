@@ -8,12 +8,17 @@ describe('Autenticação de usuário', () => {
     context('Pagina de login disponível', () => {
         it('deve acessar o site e exibir a tela de login', () => {
             LoginPage.paginaLogin()
+            LoginPage.getEmailInput().should('be.visible')
+            LoginPage.getPasswordInput().should('be.visible')
+            LoginPage.getLoginButton().should('be.visible')
         })
     })
     context('Credenciais válidas', () => {
         it('deve autenticar com credenciais válidas', () => {
             LoginPage.paginaLogin()
             LoginPage.login(email, password)
+            LoginPage.validatePageInitial()
+                .should('be.visible').and('contain', 'Lista de Produtos (Admin View)')
         })
     })
 
@@ -25,6 +30,7 @@ describe('Autenticação de usuário', () => {
             LoginPage.clickLoginButton()
             LoginPage.messageErrorEmail()
                 .should('have.text', 'Usuário não encontrado. Verifique o email ou cadastre-se.')
+                .and('be.visible')
         })
         it('deve exibir erro para senha inválida', () => {
             LoginPage.paginaLogin()
@@ -33,6 +39,7 @@ describe('Autenticação de usuário', () => {
             LoginPage.clickLoginButton()
             LoginPage.messageErrorSenha()
                 .should('have.text', 'Email ou senha inválidos')
+                .and('be.visible')
         })
         it('deve exibir erro para login apenas com senha', () => {
             LoginPage.paginaLogin()
@@ -40,6 +47,7 @@ describe('Autenticação de usuário', () => {
             LoginPage.clickLoginButton()
             LoginPage.messageErrorSenha()
                 .should('have.text', 'Email e senha são obrigatórios')
+                .and('be.visible')
         })
     })
 

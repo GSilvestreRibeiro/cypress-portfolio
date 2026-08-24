@@ -20,7 +20,7 @@ class AddProductPage {
         textPriceRequired: () => cy.get('[data-testid="error-add-product-price"]'),
         textStockRequired: () => cy.get('[data-testid="error-add-product-stock"]'),
         textSkuRequired: () => cy.get('[data-testid="error-add-product-sku"]'),
-        alertErrorRequired: () => cy.get('.Toastify__toast.Toastify__toast-theme--light.Toastify__toast--error.Toastify__toast--close-on-click')
+        toastAlert: () => cy.get('[role="alert"]')
     }
 
     fieldsData = [
@@ -52,8 +52,14 @@ class AddProductPage {
                     .and('have.prop', 'tagName', field.tag);
             });
         });
-        this.#elements.btnAdd().should('be.visible');
-        this.#elements.btnCancel().should('be.visible');
+    }
+
+    getBtnAdd() {
+        return this.#elements.btnAdd()
+    }
+
+    getBtnCancel() {
+        return this.#elements.btnCancel()
     }
 
     clickAddButton() {
@@ -64,11 +70,20 @@ class AddProductPage {
         this.#elements.btnCancel().click()
     }
 
-    validateRequiredErros() {
-        this.#elements.textNameRequired().should('be.visible').and('contain', 'Nome é obrigatório');
-        this.#elements.textPriceRequired().should('be.visible').and('contain', 'Preço é obrigatório');
-        this.#elements.textStockRequired().should('be.visible').and('contain', 'Estoque é obrigatório');
-        this.#elements.textSkuRequired().should('be.visible').and('contain', 'SKU é obrigatório');
+    getNameRequiredError() {
+        return this.#elements.textNameRequired()
+    }
+
+    getPriceRequiredError() {
+        return this.#elements.textPriceRequired()
+    }
+
+    getStockRequiredError() {
+        return this.#elements.textStockRequired();
+    }
+
+    getSkuRequiredError() {
+        return this.#elements.textSkuRequired();
     }
 
     fillProductForm(product) {
@@ -78,15 +93,13 @@ class AddProductPage {
         this.#elements.skuProductInput().type(product.sku);
     }
 
-    validateAlertErrorRequired() {
-        this.#elements.alertErrorRequired().should('be.visible').and('contain', 'Erro ao adicionar');
+    getToastAlert() {
+        return this.#elements.toastAlert()
     }
 
     selectRandomCategory() {
         cy.get('[data-testid="add-product-category"]').click()
-
         cy.get('[data-testid^="add-product-category-option-"]')
-            .should('be.visible')
             .then(($options) => {
                 const randomIndex = Cypress._.random($options.length - 1)
 
@@ -96,19 +109,15 @@ class AddProductPage {
 
     selectRandomSupplier() {
         cy.get('[data-testid="add-product-supplier"]').click()
-
         cy.get('[data-testid^="add-product-supplier-option-"]')
             .first()
             .scrollIntoView()
-            .should('be.visible')
             .then(($options) => {
                 const randomIndex = Cypress._.random($options.length - 1)
 
                 cy.wrap($options).eq(randomIndex).click()
             })
     }
-
-
 }
 
 export default new AddProductPage()
