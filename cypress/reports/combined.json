@@ -1,0 +1,434 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 13,
+    "passes": 13,
+    "pending": 0,
+    "failures": 0,
+    "testsRegistered": 13,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false,
+    "start": "2026-08-25T18:39:14.440Z",
+    "end": "2026-08-25T18:39:33.668Z",
+    "duration": 19228
+  },
+  "results": [
+    {
+      "uuid": "e2f6dfc9-2e12-4a5b-aa95-ffb351520fba",
+      "title": "",
+      "fullFile": "cypress\\e2e\\login.cy.js",
+      "file": "cypress\\e2e\\login.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "198e5984-d6f3-478e-9261-2d7ca49cd87b",
+          "title": "Autenticação de usuário",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "cy.login() deve funcionar via cy.session()",
+              "fullTitle": "Autenticação de usuário cy.login() deve funcionar via cy.session()",
+              "timedOut": null,
+              "duration": 1989,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.login(email, password);\ncy.intercept('GET', '**api/v1/products*').as('getProducts');\ncy.visit('/products');\ncy.wait('@getProducts').then(interception => {\n  expect(interception.response.statusCode).to.eq(200);\n});",
+              "err": {},
+              "uuid": "930e6ec4-9e36-4f17-9b1c-1553ecabcaeb",
+              "parentUUID": "198e5984-d6f3-478e-9261-2d7ca49cd87b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [
+            {
+              "uuid": "a61beaf8-7def-46d0-9d30-33cf547f07ef",
+              "title": "Credenciais inválidas",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "deve acessar o site e exibir a tela de login",
+                  "fullTitle": "Autenticação de usuário Credenciais inválidas deve acessar o site e exibir a tela de login",
+                  "timedOut": null,
+                  "duration": 191,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_LoginPage.default.getEmailInput().should('be.visible');\n_LoginPage.default.getPasswordInput().should('be.visible');\n_LoginPage.default.getLoginButton().should('be.visible');",
+                  "err": {},
+                  "uuid": "aa7505c8-584b-404b-abcd-83ee2bf20bae",
+                  "parentUUID": "a61beaf8-7def-46d0-9d30-33cf547f07ef",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve exibir erro para email invalido",
+                  "fullTitle": "Autenticação de usuário Credenciais inválidas deve exibir erro para email invalido",
+                  "timedOut": null,
+                  "duration": 858,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_LoginPage.default.preencherEmail('teste@teste.com');\n_LoginPage.default.preencherSenha(password);\n_LoginPage.default.clickLoginButton();\n_LoginPage.default.messageErrorEmail().should('have.text', 'Usuário não encontrado. Verifique o email ou cadastre-se.').and('be.visible');",
+                  "err": {},
+                  "uuid": "c9009fd5-cad2-4e43-9b51-d63766e4916f",
+                  "parentUUID": "a61beaf8-7def-46d0-9d30-33cf547f07ef",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve exibir erro para senha inválida",
+                  "fullTitle": "Autenticação de usuário Credenciais inválidas deve exibir erro para senha inválida",
+                  "timedOut": null,
+                  "duration": 1238,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_LoginPage.default.preencherEmail(email);\n_LoginPage.default.preencherSenha('senhaerrada');\n_LoginPage.default.clickLoginButton();\n_LoginPage.default.messageErrorSenha().should('have.text', 'Email ou senha inválidos').and('be.visible');",
+                  "err": {},
+                  "uuid": "91c9ce0f-90ef-4f07-b1f0-05369e468a5b",
+                  "parentUUID": "a61beaf8-7def-46d0-9d30-33cf547f07ef",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve exibir erro para login apenas com senha",
+                  "fullTitle": "Autenticação de usuário Credenciais inválidas deve exibir erro para login apenas com senha",
+                  "timedOut": null,
+                  "duration": 461,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_LoginPage.default.preencherSenha(password);\n_LoginPage.default.clickLoginButton();\n_LoginPage.default.messageErrorSenha().should('have.text', 'Email e senha são obrigatórios').and('be.visible');",
+                  "err": {},
+                  "uuid": "8c1dd283-926b-4ab4-83ff-27ff540b0372",
+                  "parentUUID": "a61beaf8-7def-46d0-9d30-33cf547f07ef",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "aa7505c8-584b-404b-abcd-83ee2bf20bae",
+                "c9009fd5-cad2-4e43-9b51-d63766e4916f",
+                "91c9ce0f-90ef-4f07-b1f0-05369e468a5b",
+                "8c1dd283-926b-4ab4-83ff-27ff540b0372"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 2748,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "f340f254-6c98-477c-b701-0fd19fcb7544",
+              "title": "Credenciais válidas",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "deve autenticar com credenciais válidas",
+                  "fullTitle": "Autenticação de usuário Credenciais válidas deve autenticar com credenciais válidas",
+                  "timedOut": null,
+                  "duration": 380,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//cy.login(email, password)\ncy.visit('/products');\n_LoginPage.default.validatePageInitial().should('be.visible').and('contain', 'Lista de Produtos (Admin View)');",
+                  "err": {},
+                  "uuid": "fd33f0c2-f38c-4dcd-9223-8a3d39d5be4f",
+                  "parentUUID": "f340f254-6c98-477c-b701-0fd19fcb7544",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "fd33f0c2-f38c-4dcd-9223-8a3d39d5be4f"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 380,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [
+            "930e6ec4-9e36-4f17-9b1c-1553ecabcaeb"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1989,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    },
+    {
+      "uuid": "70eae602-53ee-4ffc-8f84-c3e743ba1b7f",
+      "title": "",
+      "fullFile": "cypress\\e2e\\addProduct.cy.js",
+      "file": "cypress\\e2e\\addProduct.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "3bf73ad1-f4ad-4c22-82cb-d64378a9b197",
+          "title": "Adicionar produto",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "deve voltar para a página de produtos ao clicar no botão voltar",
+              "fullTitle": "Adicionar produto deve voltar para a página de produtos ao clicar no botão voltar",
+              "timedOut": null,
+              "duration": 3259,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_addProductPage.default.clickAddProductButton();\n_addProductPage.default.clickBackButton();\n_LoginPage.default.validatePageInitial();",
+              "err": {},
+              "uuid": "fa9443eb-97c6-4735-8669-c4b33c09cccd",
+              "parentUUID": "3bf73ad1-f4ad-4c22-82cb-d64378a9b197",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "deve adicionar um produto com sucesso",
+              "fullTitle": "Adicionar produto deve adicionar um produto com sucesso",
+              "timedOut": null,
+              "duration": 2364,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const product = (0, _product.createRandomProduct)();\n_addProductPage.default.clickAddProductButton();\n_addProductPage.default.fillProductForm(product);\n_addProductPage.default.selectRandomCategory();\n_addProductPage.default.selectRandomSupplier();\n_addProductPage.default.clickAddButton();\n_addProductPage.default.getToastAlert().should('be.visible').and('contain', 'Produto adicionado com sucesso!');\n_LoginPage.default.validatePageInitial().should('be.visible').and('contain', 'Lista de Produtos (Admin View)');",
+              "err": {},
+              "uuid": "5febbda5-615e-49a2-b349-02b4f823fec6",
+              "parentUUID": "3bf73ad1-f4ad-4c22-82cb-d64378a9b197",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [
+            {
+              "uuid": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+              "title": "Validar campos obrigatórios do formulário",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "deve validar existência dos campos do formulário",
+                  "fullTitle": "Adicionar produto Validar campos obrigatórios do formulário deve validar existência dos campos do formulário",
+                  "timedOut": null,
+                  "duration": 507,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_addProductPage.default.clickAddProductButton();\n_addProductPage.default.validateFormFields();\n_addProductPage.default.getBtnAdd().should('be.visible');\n_addProductPage.default.getBtnCancel().should('be.visible');",
+                  "err": {},
+                  "uuid": "9a21949a-7a25-4cb0-9e55-275500c38b17",
+                  "parentUUID": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve recusar cadastro com campos de inputs obrigatórios vazios",
+                  "fullTitle": "Adicionar produto Validar campos obrigatórios do formulário deve recusar cadastro com campos de inputs obrigatórios vazios",
+                  "timedOut": null,
+                  "duration": 832,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "_addProductPage.default.clickAddProductButton();\n_addProductPage.default.clickAddButton();\n_addProductPage.default.getNameRequiredError().should('be.visible').and('contain', 'Nome é obrigatório');\n_addProductPage.default.getPriceRequiredError().should('be.visible').and('contain', 'Preço é obrigatório');\n_addProductPage.default.getStockRequiredError().should('be.visible').and('contain', 'Estoque é obrigatório');\n_addProductPage.default.getSkuRequiredError().should('be.visible').and('contain', 'SKU é obrigatório');",
+                  "err": {},
+                  "uuid": "8dc6a649-3216-4e36-ab45-a51be43e4d35",
+                  "parentUUID": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve recusar cadastro com campo fornecedor vazio",
+                  "fullTitle": "Adicionar produto Validar campos obrigatórios do formulário deve recusar cadastro com campo fornecedor vazio",
+                  "timedOut": null,
+                  "duration": 1754,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _product.createRandomProduct)();\n_addProductPage.default.clickAddProductButton();\n_addProductPage.default.fillProductForm(product);\n_addProductPage.default.selectRandomCategory();\n_addProductPage.default.clickAddButton();\n_addProductPage.default.getToastAlert().should('be.visible').and('contain', 'Erro ao adicionar');",
+                  "err": {},
+                  "uuid": "bfa16de1-7b5d-44a5-8330-ebba2551662b",
+                  "parentUUID": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve recusar cadastro com campo categoria vazio",
+                  "fullTitle": "Adicionar produto Validar campos obrigatórios do formulário deve recusar cadastro com campo categoria vazio",
+                  "timedOut": null,
+                  "duration": 1776,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _product.createRandomProduct)();\n_addProductPage.default.clickAddProductButton();\n_addProductPage.default.fillProductForm(product);\n_addProductPage.default.selectRandomSupplier();\n_addProductPage.default.clickAddButton();\n_addProductPage.default.getToastAlert().should('be.visible').and('contain', 'Erro ao adicionar');",
+                  "err": {},
+                  "uuid": "38df6372-b4aa-4edd-a867-485b48dd46e9",
+                  "parentUUID": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "deve recusar cadastro com campos de lista obrigatórios vazios",
+                  "fullTitle": "Adicionar produto Validar campos obrigatórios do formulário deve recusar cadastro com campos de lista obrigatórios vazios",
+                  "timedOut": null,
+                  "duration": 1619,
+                  "state": "passed",
+                  "speed": "fast",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "const product = (0, _product.createRandomProduct)();\n_addProductPage.default.clickAddProductButton();\n_addProductPage.default.fillProductForm(product);\n_addProductPage.default.clickAddButton();\n_addProductPage.default.getToastAlert().should('be.visible').and('contain', 'Erro ao adicionar');",
+                  "err": {},
+                  "uuid": "f2c9d93f-43e0-4f61-88e9-6d692e14f85b",
+                  "parentUUID": "887f90bd-2f7a-4fc4-86cd-804c39702eb3",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "9a21949a-7a25-4cb0-9e55-275500c38b17",
+                "8dc6a649-3216-4e36-ab45-a51be43e4d35",
+                "bfa16de1-7b5d-44a5-8330-ebba2551662b",
+                "38df6372-b4aa-4edd-a867-485b48dd46e9",
+                "f2c9d93f-43e0-4f61-88e9-6d692e14f85b"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 6488,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [
+            "fa9443eb-97c6-4735-8669-c4b33c09cccd",
+            "5febbda5-615e-49a2-b349-02b4f823fec6"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5623,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "8.0.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
