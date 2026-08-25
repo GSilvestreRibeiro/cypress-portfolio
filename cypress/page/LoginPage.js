@@ -6,7 +6,7 @@ class LoginPage {
         loginButton: () => cy.get('[data-testid="login-button"]'),
         errorMessageSenha: () => cy.get('[data-testid="password-error"]'),
         errorMessageEmail: () => cy.get('[data-testid="email-error"]'),
-        logado: () => cy.get('[class="text-xl text-pink-100 mb-4"]')
+        logado: () => cy.contains('Lista de Produtos (Admin View)')
     }
 
     preencherEmail(email){

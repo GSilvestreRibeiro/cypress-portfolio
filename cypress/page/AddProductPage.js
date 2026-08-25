@@ -50,8 +50,8 @@ class AddProductPage {
                 this.#elements.fieldByTestId(field.testId)
                     .should('be.visible')
                     .and('have.prop', 'tagName', field.tag);
-            });
-        });
+            })
+        })
     }
 
     getBtnAdd() {
@@ -98,7 +98,7 @@ class AddProductPage {
     }
 
     selectRandomCategory() {
-        cy.get('[data-testid="add-product-category"]').click()
+        this.#elements.categoryProductInput().click()
         cy.get('[data-testid^="add-product-category-option-"]')
             .then(($options) => {
                 const randomIndex = Cypress._.random($options.length - 1)
@@ -108,7 +108,8 @@ class AddProductPage {
     }
 
     selectRandomSupplier() {
-        cy.get('[data-testid="add-product-supplier"]').click()
+        this.#elements.supplierProductInput().click()
+        this.#elements
         cy.get('[data-testid^="add-product-supplier-option-"]')
             .first()
             .scrollIntoView()

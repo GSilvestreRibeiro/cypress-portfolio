@@ -7,28 +7,21 @@ describe('Adicionar produto', () => {
     const email = Cypress.env('USER_EMAIL')
     const password = Cypress.env('USER_PASSWORD')
 
-    it('deve voltar para a página de produtos ao clicar no botão voltar', () => {
-        LoginPage.paginaLogin()
-        LoginPage.login(email, password)
-        AddProductPage.clickAddProductButton()
-        AddProductPage.clickBackButton()
-        LoginPage.validatePageInitial()
+    beforeEach(() => {
+        cy.login(email, password)
+        cy.visit('/products')
     })
 
-    context('Validando campos obrigatórios do formulário', () => {
+    context('Validar campos obrigatórios do formulário', () => {
 
-        it('deve validar existência dos campos do formulário', () =>{
-            LoginPage.paginaLogin()
-            LoginPage.login(email, password)
+        it('deve validar existência dos campos do formulário', () => {
             AddProductPage.clickAddProductButton()
             AddProductPage.validateFormFields()
             AddProductPage.getBtnAdd().should('be.visible')
             AddProductPage.getBtnCancel().should('be.visible')
         })
 
-        it('deve recusar cadastro com campos de inputs obrigatórios vazios', () =>{
-            LoginPage.paginaLogin()
-            LoginPage.login(email, password)
+        it('deve recusar cadastro com campos de inputs obrigatórios vazios', () => {
             AddProductPage.clickAddProductButton()
             AddProductPage.clickAddButton()
             AddProductPage.getNameRequiredError()
@@ -41,27 +34,23 @@ describe('Adicionar produto', () => {
                 .should('be.visible').and('contain', 'SKU é obrigatório')
         })
 
-        it('deve recusar cadastro com campo fornecedor vazio', () =>{
+        it('deve recusar cadastro com campo fornecedor vazio', () => {
 
             const product = createRandomProduct()
 
-            LoginPage.paginaLogin()
-            LoginPage.login(email, password)
             AddProductPage.clickAddProductButton()
             AddProductPage.fillProductForm(product)
             AddProductPage.selectRandomCategory()
             AddProductPage.clickAddButton()
             AddProductPage.getToastAlert()
                 .should('be.visible').and('contain', 'Erro ao adicionar');
-            
+
         })
 
-        it('deve recusar cadastro com campo categoria vazio', () =>{
+        it('deve recusar cadastro com campo categoria vazio', () => {
 
             const product = createRandomProduct()
 
-            LoginPage.paginaLogin()
-            LoginPage.login(email, password)
             AddProductPage.clickAddProductButton()
             AddProductPage.fillProductForm(product)
             AddProductPage.selectRandomSupplier()
@@ -70,12 +59,10 @@ describe('Adicionar produto', () => {
                 .should('be.visible').and('contain', 'Erro ao adicionar');
         })
 
-        it('deve recusar cadastro com campos de lista obrigatórios vazios', () =>{
+        it('deve recusar cadastro com campos de lista obrigatórios vazios', () => {
 
             const product = createRandomProduct()
 
-            LoginPage.paginaLogin()
-            LoginPage.login(email, password)
             AddProductPage.clickAddProductButton()
             AddProductPage.fillProductForm(product)
             AddProductPage.clickAddButton()
@@ -84,12 +71,16 @@ describe('Adicionar produto', () => {
         })
     })
 
+    it('deve voltar para a página de produtos ao clicar no botão voltar', () => {
+        AddProductPage.clickAddProductButton()
+        AddProductPage.clickBackButton()
+        LoginPage.validatePageInitial()
+    })
+
     it('deve adicionar um produto com sucesso', () => {
 
         const product = createRandomProduct()
 
-        LoginPage.paginaLogin()
-        LoginPage.login(email, password)
         AddProductPage.clickAddProductButton()
         AddProductPage.fillProductForm(product)
         AddProductPage.selectRandomCategory()
@@ -99,7 +90,5 @@ describe('Adicionar produto', () => {
             .should('be.visible').and('contain', 'Produto adicionado com sucesso!')
         LoginPage.validatePageInitial()
             .should('be.visible').and('contain', 'Lista de Produtos (Admin View)')
-
-        // Aqui você pode adicionar validações para garantir que o produto foi adicionado com sucesso
     })
 })

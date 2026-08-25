@@ -25,19 +25,24 @@
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 import LoginPage from '../page/LoginPage'
 
-Cypress.Commands.add('login', () => {
-    cy.session('minha-sessao', () => {
-    LoginPage.paginaLogin()
-    LoginPage.login()
+Cypress.Commands.add('login', (
+
+    email = Cypress.env('USER_EMAIL'), 
+    password = Cypress.env('USER_PASSWORD')) => {
+        
+    cy.session(['minha-sessao', email], () => {
+        LoginPage.paginaLogin()
+        LoginPage.login(email, password)
+        LoginPage.validatePageInitial()
+            .should('be.visible')
 
     }, {
         validate() {
-            //Valida se a sessão ainda é válida antes de cada teste
-            cy.intercept('GET', '**/products').as('validaSessao')
+            cy.intercept('GET', '**/api/v1/products*').as('validaSessao')
             cy.visit('/products')
-            cy.wait('@validaSessao').then((interception) => {
-            expect(interception.response.statusCode).to.eq(200)
-            })
+            cy.wait('@validaSessao')
+                .its('response.statusCode')
+                .should('eq', 200)
         }
     })
 })
