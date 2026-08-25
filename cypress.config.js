@@ -3,7 +3,7 @@ module.exports = defineConfig({
   // === CYPRESS CLOUD (Dashboard) ===
   // Gere em: cloud.cypress.io > seu projeto > Project Settings
   // Remova o comentário abaixo e substitua pelo seu Project ID
-  projectId: '3bgajx',
+  projectId: 'gsqqyg',
   e2e: {
     // === URL BASE ===
     // Substitua pela URL do site que voce escolheu
