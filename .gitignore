@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 .vite/
 cypress.env.json
 node_modules
+cypress/reports/
+cypress/screenshots/
+cypress/videos/

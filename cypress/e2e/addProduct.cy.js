@@ -1,4 +1,4 @@
-import AddProductPage from '../page/addProductPage'
+import AddProductPage from '../page/AddProductPage'
 import LoginPage from '../page/LoginPage'
 import { createRandomProduct } from '../support/factories/product'
 
