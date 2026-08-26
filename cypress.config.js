@@ -37,6 +37,8 @@ module.exports = defineConfig({
       html: false, // gera so JSON — merge via script npm
       json: true,
     },
+    screenshotsFolder: 'cypress/reports/mochawesome-report/screenshots',
+    videosFolder: 'cypress/reports/mochawesome-report/videos',
     // === DE AMBIENTE ===
     env: {
       // Valores nao-sensiveis podem ficar aqui
@@ -50,14 +52,14 @@ module.exports = defineConfig({
     // === NODE EVENTS (plugins) ===
     setupNodeEvents(on, config) {
       // Deletar video de specs que passaram (economiza espaco no CI)
-      on('after:spec', (spec, results) => {
-        if (results && results.stats.failures === 0) {
-          const fs = require('fs')
-          if (results.video && fs.existsSync(results.video)) {
-            fs.unlinkSync(results.video)
-          }
-        }
-      })
+      //on('after:spec', (spec, results) => {
+      //  if (results && results.stats.failures === 0) {
+      //    const fs = require('fs')
+      //    if (results.video && fs.existsSync(results.video)) {
+      //      fs.unlinkSync(results.video)
+      //    }
+      //  }
+      //})
       return config
     },
   },
