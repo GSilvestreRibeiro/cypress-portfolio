@@ -87,7 +87,8 @@ O projeto atual valida os seguintes cenários:
 - autenticação com usuário e senha válidos
 - retorno de erro para credenciais inválidas
 - uso de `cy.session()` em um fluxo de login
-- validação de resposta HTTP ao acessar `/products`
+- cadastro de um novo produto
+- validação de campos obrigatórios do produto
 
 ## Observações
 

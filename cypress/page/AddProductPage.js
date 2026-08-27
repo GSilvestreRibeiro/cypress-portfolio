@@ -13,7 +13,9 @@ class AddProductPage {
         stockProductInput: () => cy.get('[data-testid="add-product-stock"]'),
         skuProductInput: () => cy.get('[data-testid="add-product-sku"]'),
         categoryProductInput: () => cy.get('[data-testid="add-product-category"]'),
+        listCategoryOptions: () => cy.get('[data-testid^="add-product-category-option-"]'),
         supplierProductInput: () => cy.get('[data-testid="add-product-supplier"]'),
+        listSupplierOptions: () => cy.get('[data-testid^="add-product-supplier-option-"]'),
         btnAdd: () => cy.get('[data-testid="add-product-submit"]'),
         btnCancel: () => cy.get('[data-testid="add-product-cancel"]'),
         textNameRequired: () => cy.get('[data-testid="error-add-product-name"]'),
@@ -99,7 +101,7 @@ class AddProductPage {
 
     selectRandomCategory() {
         this.#elements.categoryProductInput().click()
-        cy.get('[data-testid^="add-product-category-option-"]')
+        this.#elements.listCategoryOptions()
             .then(($options) => {
                 const randomIndex = Cypress._.random($options.length - 1)
 
@@ -109,14 +111,14 @@ class AddProductPage {
 
     selectRandomSupplier() {
         this.#elements.supplierProductInput().click()
-        this.#elements
-        cy.get('[data-testid^="add-product-supplier-option-"]')
-            .first()
-            .scrollIntoView()
+        this.#elements.listSupplierOptions()
+            .should('have.length.greaterThan', 0)
             .then(($options) => {
-                const randomIndex = Cypress._.random($options.length - 1)
+                const randomIndex = Cypress._.random(0, $options.length - 1)
 
-                cy.wrap($options).eq(randomIndex).click()
+                cy.wrap($options.eq(randomIndex))
+                    .scrollIntoView()
+                    .click()
             })
     }
 }

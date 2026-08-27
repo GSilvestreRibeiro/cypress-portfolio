@@ -1,0 +1,269 @@
+name: Cypress Tests
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: Run by cypress command line
+        default: cypress/e2e/*
+
+jobs:
+
+  # ==========================================
+  # 1. ELECTRON
+  # ==========================================
+
+  cypress-electron-e2e:
+    runs-on: ubuntu-latest
+
+    container:
+      image: cypress/browsers:node-24.20.0-chrome-152.0.7977.64-1-ff-154.0.1-edge-151.0.4129.107-1
+      options: --user 1001
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6.1.0
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v7
+        with:
+          install-command: npm ci
+          browser: electron
+          spec: ${{ github.event.inputs.spec }}
+        env:
+          CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+      - name: Generate Mochawesome report
+        if: always()
+        run: npm run report
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: mochawesome-electron
+          path: cypress/reports
+          if-no-files-found: ignore
+
+
+  # ==========================================
+  # 2. CHROME
+  # Só executa se Electron passar
+  # ==========================================
+
+  cypress-chrome-e2e:
+    needs: cypress-electron-e2e
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: cypress/browsers:node-24.20.0-chrome-152.0.7977.64-1-ff-154.0.1-edge-151.0.4129.107-1
+      options: --user 1001
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6.1.0
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v7
+        with:
+          install-command: npm ci
+          browser: chrome
+          spec: ${{ github.event.inputs.spec }}
+        env:
+          CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+      - name: Generate Mochawesome report
+        if: always()
+        run: npm run report
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: mochawesome-chrome
+          path: cypress/reports
+          if-no-files-found: ignore
+
+
+  # ==========================================
+  # 3. FIREFOX
+  # Só executa se Chrome passar
+  # ==========================================
+
+  cypress-firefox-e2e:
+    needs: cypress-chrome-e2e
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: cypress/browsers:node-24.20.0-chrome-152.0.7977.64-1-ff-154.0.1-edge-151.0.4129.107-1
+      options: --user 1001
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6.1.0
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v7
+        with:
+          install-command: npm ci
+          browser: firefox
+          spec: ${{ github.event.inputs.spec }}
+        env:
+          CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+      - name: Generate Mochawesome report
+        if: always()
+        run: npm run report
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: mochawesome-firefox
+          path: cypress/reports
+          if-no-files-found: ignore
+
+
+  # ==========================================
+  # 4. EDGE
+  # Só executa se Firefox passar
+  # ==========================================
+
+  cypress-edge-e2e:
+    needs: cypress-firefox-e2e
+
+    runs-on: ubuntu-latest
+
+    container:
+      image: cypress/browsers:node-24.20.0-chrome-152.0.7977.64-1-ff-154.0.1-edge-151.0.4129.107-1
+      options: --user 1001
+
+    steps:
+      - name: Get code
+        uses: actions/checkout@v6.1.0
+
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v7
+        with:
+          install-command: npm ci
+          browser: edge
+          spec: ${{ github.event.inputs.spec }}
+        env:
+          CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+
+      - name: Generate Mochawesome report
+        if: always()
+        run: npm run report
+
+      - name: Upload Mochawesome report
+        if: always()
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: mochawesome-edge
+          path: cypress/reports
+          if-no-files-found: ignore
+
+
+  # ==========================================
+  # 5. TEST REPORT / DASHBOARD
+  # ==========================================
+
+  test-report:
+    if: always()
+
+    needs:
+      - cypress-electron-e2e
+      - cypress-chrome-e2e
+      - cypress-firefox-e2e
+      - cypress-edge-e2e
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # ========================================
+      # CHECKOUT
+      # ========================================
+
+      - name: Get code
+        uses: actions/checkout@v6.1.0
+
+
+      # ========================================
+      # DOWNLOAD DOS REPORTS
+      # ========================================
+
+      - name: Download Electron report
+        if: needs.cypress-electron-e2e.result != 'skipped'
+        uses: actions/download-artifact@v8
+        with:
+          name: mochawesome-electron
+          path: reports/electron
+
+
+      - name: Download Chrome report
+        if: needs.cypress-chrome-e2e.result != 'skipped'
+        uses: actions/download-artifact@v8
+        with:
+          name: mochawesome-chrome
+          path: reports/chrome
+
+
+      - name: Download Firefox report
+        if: needs.cypress-firefox-e2e.result != 'skipped'
+        uses: actions/download-artifact@v8
+        with:
+          name: mochawesome-firefox
+          path: reports/firefox
+
+
+      - name: Download Edge report
+        if: needs.cypress-edge-e2e.result != 'skipped'
+        uses: actions/download-artifact@v8
+        with:
+          name: mochawesome-edge
+          path: reports/edge
+
+
+      # ========================================
+      # ORGANIZA OS COMBINED.JSON
+      # ========================================
+
+      - name: Organize reports
+        run: |
+          mkdir -p reports/electron
+          mkdir -p reports/chrome
+          mkdir -p reports/firefox
+          mkdir -p reports/edge
+
+          find reports/electron -name "combined.json" -exec cp {} reports/electron/combined.json \;
+          find reports/chrome -name "combined.json" -exec cp {} reports/chrome/combined.json \;
+          find reports/firefox -name "combined.json" -exec cp {} reports/firefox/combined.json \;
+          find reports/edge -name "combined.json" -exec cp {} reports/edge/combined.json \;
+
+
+      # ========================================
+      # DASHBOARD
+      # ========================================
+
+      - name: Generate Dashboard
+        run: npm run dashboard
+
+
+      # ========================================
+      # PUBLICA NO GITHUB ACTIONS
+      # ========================================
+
+      - name: Publish Dashboard
+        if: always()
+        run: cat dashboard.md >> "$GITHUB_STEP_SUMMARY"

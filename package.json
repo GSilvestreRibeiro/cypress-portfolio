@@ -2,9 +2,10 @@
   "scripts": {
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "report:merge": "mochawesome-merge cypress/reports/*.json -o cypress/reports/combined.json",
+    "report:merge": "mochawesome-merge \"cypress/reports/mochawesome*.json\" -o cypress/reports/combined.json",
     "report:html": "marge cypress/reports/combined.json -f report -o cypress/reports",
-    "report": "npm run report:merge && npm run report:html"
+    "report": "npm run report:merge && npm run report:html",
+    "dashboard": "node scripts/generate-dashboard.js"
   },
   "name": "cypress-portfolio",
   "version": "1.0.0",
@@ -12,7 +13,10 @@
   "main": "cypress.config.js",
   "devDependencies": {
     "@faker-js/faker": "^10.6.0",
-    "cypress": "^15.21.0"
+    "cypress": "^15.21.0",
+    "mochawesome": "^8.0.1",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
   },
   "repository": {
     "type": "git",
