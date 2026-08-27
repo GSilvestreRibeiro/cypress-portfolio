@@ -77,7 +77,7 @@ describe('Adicionar produto', () => {
         LoginPage.validatePageInitial()
     })
 
-    it('deve adicionar um produto com sucesso', () => {
+    it.only('deve adicionar um produto com sucesso', () => {
 
         const product = createRandomProduct()
 
