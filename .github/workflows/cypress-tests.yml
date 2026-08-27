@@ -205,7 +205,7 @@ jobs:
 
       - name: Download Electron report
         if: needs.cypress-electron-e2e.result != 'skipped'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: mochawesome-electron
           path: reports/electron
@@ -213,7 +213,7 @@ jobs:
 
       - name: Download Chrome report
         if: needs.cypress-chrome-e2e.result != 'skipped'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: mochawesome-chrome
           path: reports/chrome
@@ -221,7 +221,7 @@ jobs:
 
       - name: Download Firefox report
         if: needs.cypress-firefox-e2e.result != 'skipped'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: mochawesome-firefox
           path: reports/firefox
@@ -229,7 +229,7 @@ jobs:
 
       - name: Download Edge report
         if: needs.cypress-edge-e2e.result != 'skipped'
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: mochawesome-edge
           path: reports/edge
