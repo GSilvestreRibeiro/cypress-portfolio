@@ -33,7 +33,6 @@ jobs:
         with:
           install-command: npm ci
           browser: electron
-          group: UI Electron
           spec: ${{ github.event.inputs.spec }}
         env:
           CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
@@ -75,7 +74,6 @@ jobs:
         with:
           install-command: npm ci
           browser: chrome
-          group: UI Chrome
           spec: ${{ github.event.inputs.spec }}
         env:
           CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
@@ -117,7 +115,6 @@ jobs:
         with:
           install-command: npm ci
           browser: firefox
-          group: UI Firefox
           spec: ${{ github.event.inputs.spec }}
         env:
           CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
@@ -159,7 +156,6 @@ jobs:
         with:
           install-command: npm ci
           browser: edge
-          group: UI Edge
           spec: ${{ github.event.inputs.spec }}
         env:
           CYPRESS_USER_EMAIL: ${{ secrets.USER_EMAIL }}
