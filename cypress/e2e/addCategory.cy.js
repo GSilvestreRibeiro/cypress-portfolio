@@ -15,7 +15,7 @@ describe('Adicionar categoria', () => {
         cy.window().then((win) => {
             cy.stub(win, 'open').as('windowOpen')
         })
-        AddCategoryPage.getBtnAddCategory()
+        AddCategoryPage.clickBtnAddCategory()
         cy.get('@windowOpen')
             .should('have.been.calledWith', '/categories', '_blank')
     })
@@ -23,33 +23,54 @@ describe('Adicionar categoria', () => {
     context('Adicionar categoria', () => {
         beforeEach(() => {
             cy.visit('/categories')
+            AddCategoryPage.clickBtnNewCategory()
         })
 
         it('deve validar existencia dos campos', () => {
-            AddCategoryPage.getBtnNewCategory()
+            //AddCategoryPage.getBtnNewCategory()
             AddCategoryPage.visibleFormsCategory()
-            AddCategoryPage.getBtnSaveCategory()
-                .should('text', 'Salvar')
+            AddCategoryPage.clickBtnSaveCategory()
+                .should('have.text', 'Salvar')
                 .and('be.visible')
             AddCategoryPage.getBtnCancel()
-                .should('text', 'Cancelar')
+                .should('have.text', 'Cancelar')
                 .and('be.visible')
 
         })
 
-        /*it('deve validar campos obrigatórios da categoria', () => {
+        it('deve validar campos obrigatórios da categoria', () => {
+            //AddCategoryPage.getBtnNewCategory()
+            AddCategoryPage.clickBtnSaveCategory()
+            AddCategoryPage.getLabelCategoryRequired()
+                .should('be.visible').and('have.text', 'Nome da categoria é obrigatório')
+            AddCategoryPage.getLabelDescriptionRequired()
+                .should('be.visible').and('have.text', 'Descrição é obrigatória')
+            AddCategoryPage.getToastAlert()
+                .should('be.visible')
+                .and('have.text', 'Corrija os erros antes de salvar')
 
         })
 
         it('deve cancelar a adição de uma categoria', () => {
-
+            //AddCategoryPage.getBtnNewCategory()
+            AddCategoryPage.clickBtnCancel()
+            AddCategoryPage.getModalFormsCategory()
+                .should('not.exist')
+            AddCategoryPage.getLabelManagementCategory()
+                .should('be.visible')
         })
 
-        it('deve recusar cadastro de categoria com o campo nome da categoria vazio', () => {
-
+        it.only('deve recusar cadastro de categoria com o campo nome da categoria vazio', () => {
+            AddCategoryPage.fillDescriptionCategory(createRandomCategory())
+            AddCategoryPage.clickBtnSaveCategory()
+            AddCategoryPage.getLabelCategoryRequired()
+                .should('be.visible').and('have.text', 'Nome da categoria é obrigatório')
+            AddCategoryPage.getToastAlert()
+                .should('be.visible')
+                .and('have.text', 'Corrija os erros antes de salvar')
         })
 
-        it('deve recusar cadastro de categoria com o campo de descrição vazio', () => {
+        /*it('deve recusar cadastro de categoria com o campo de descrição vazio', () => {
 
         })
 

@@ -25,13 +25,13 @@ describe('Adicionar produto', () => {
             AddProductPage.clickAddProductButton()
             AddProductPage.clickAddButton()
             AddProductPage.getNameRequiredError()
-                .should('be.visible').and('contain', 'Nome é obrigatório')
+                .should('be.visible').and('contain.text', 'Nome é obrigatório')
             AddProductPage.getPriceRequiredError()
-                .should('be.visible').and('contain', 'Preço é obrigatório')
+                .should('be.visible').and('contain.text', 'Preço é obrigatório')
             AddProductPage.getStockRequiredError()
-                .should('be.visible').and('contain', 'Estoque é obrigatório')
+                .should('be.visible').and('contain.text', 'Estoque é obrigatório')
             AddProductPage.getSkuRequiredError()
-                .should('be.visible').and('contain', 'SKU é obrigatório')
+                .should('be.visible').and('contain.text', 'SKU é obrigatório')
         })
 
         it('deve recusar cadastro com campo fornecedor vazio', () => {
@@ -43,7 +43,7 @@ describe('Adicionar produto', () => {
             AddProductPage.selectRandomCategory()
             AddProductPage.clickAddButton()
             AddProductPage.getToastAlert()
-                .should('be.visible').and('contain', 'Erro ao adicionar');
+                .should('be.visible').and('have.text', 'Erro ao adicionar');
 
         })
 
@@ -56,7 +56,7 @@ describe('Adicionar produto', () => {
             AddProductPage.selectRandomSupplier()
             AddProductPage.clickAddButton()
             AddProductPage.getToastAlert()
-                .should('be.visible').and('contain', 'Erro ao adicionar');
+                .should('be.visible').and('have.text', 'Erro ao adicionar');
         })
 
         it('deve recusar cadastro com campos de lista obrigatórios vazios', () => {
@@ -67,7 +67,7 @@ describe('Adicionar produto', () => {
             AddProductPage.fillProductForm(product)
             AddProductPage.clickAddButton()
             AddProductPage.getToastAlert()
-                .should('be.visible').and('contain', 'Erro ao adicionar');
+                .should('be.visible').and('have.text', 'Erro ao adicionar');
         })
     })
 
@@ -77,7 +77,7 @@ describe('Adicionar produto', () => {
         LoginPage.validatePageInitial()
     })
 
-    it.only('deve adicionar um produto com sucesso', () => {
+    it('deve adicionar um produto com sucesso', () => {
 
         const product = createRandomProduct()
 
@@ -87,7 +87,7 @@ describe('Adicionar produto', () => {
         AddProductPage.selectRandomSupplier()
         AddProductPage.clickAddButton()
         AddProductPage.getToastAlert()
-            .should('be.visible').and('contain', 'Produto adicionado com sucesso!')
+            .should('be.visible').and('have.text', 'Produto adicionado com sucesso!')
         LoginPage.validatePageInitial()
             .should('be.visible').and('contain', 'Lista de Produtos (Admin View)')
     })

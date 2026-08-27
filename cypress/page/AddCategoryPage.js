@@ -3,10 +3,12 @@ class AddCategoryPage {
     #elements = {
         btnAddCategory: () => cy.get('[data-testid="new-category-button"]'),
         btnNewCategory: () => cy.contains('button', /^Nova Categoria$/),
+        labelManagementCategory: () => cy.contains('h1', 'Gestão de Categorias'),
         modalFormsCategory: () => cy.get('[class="w-full max-w-md bg-slate-800 rounded-xl border border-slate-700 shadow-2xl"]'),
         nameCategoryInput: () => cy.get('input[name="name"]'),
         descriptionCategoryInput: () => cy.get('textarea[name="description"]'),
-        labelErrorRequired: () => cy.get('[class="text-red-400 text-xs mt-1"]'),
+        labelCategoryRequired: () => cy.contains('p', 'Nome da categoria é obrigatório'),
+        labelDescriptionRequired: () => cy.get('textarea[name="description"] + p'),
         btnCancel: () => cy.get('button[type="button"]'),
         toastAlert: () => cy.get('[role="alert"]'),
         labelByName: (text) => cy.contains('label', text),
@@ -36,12 +38,20 @@ class AddCategoryPage {
         });
     }
 
-    getBtnAddCategory() {
+    getLabelManagementCategory() {
+        return this.#elements.labelManagementCategory()
+    }
+
+    getModalFormsCategory() {
+        return this.#elements.modalFormsCategory()
+    }
+
+    clickBtnAddCategory() {
         return this.#elements.btnAddCategory().click()
     }
 
-    getBtnNewCategory() {
-        this.#elements.btnNewCategory().click()
+    clickBtnNewCategory() {
+        return this.#elements.btnNewCategory().click()
     }
     getNameCategoryInput() {
         return this.#elements.nameCategoryInput()
@@ -51,16 +61,24 @@ class AddCategoryPage {
         return this.#elements.descriptionCategoryInput()
     }
 
-    getLabelErrorRequired() {
-        return this.#elements.labelErrorRequired()
+    getLabelCategoryRequired() {
+        return this.#elements.labelCategoryRequired()
     }
 
-    getBtnSaveCategory() {
-        return this.#elements.btnSalveCategory()
+    getLabelDescriptionRequired() {
+        return this.#elements.labelDescriptionRequired()
+    }
+
+    clickBtnSaveCategory() {
+        return this.#elements.btnSalveCategory().click()
     }
 
     getBtnCancel() {
         return this.#elements.btnCancel()
+    }
+
+    clickBtnCancel() { 
+        return this.#elements.btnCancel().click()
     }
 
     getToastAlert() {
@@ -70,6 +88,14 @@ class AddCategoryPage {
     fillCategoryForm(name, description) {
         this.#elements.nameCategoryInput().clear().type(name)
         this.#elements.descriptionCategoryInput().clear().type(description)
+    }
+
+    fillNameCategory(randomCategory) {
+        this.#elements.nameCategoryInput().clear().type(randomCategory.name)
+    }
+
+    fillDescriptionCategory(randomCategory) {
+        this.#elements.descriptionCategoryInput().clear().type(randomCategory.description)
     }
 
 }
